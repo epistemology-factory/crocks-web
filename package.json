@@ -1,0 +1,27 @@
+{
+  "name": "@epistemology-factory/crocks-web",
+  "version": "0.0.1",
+  "description": "Functions to help write web applications with crocks",
+  "scripts": {
+    "build": "cpy --cwd=src --parents . ../build && cpy package*.json README.md LICENSE build",
+    "clean": "rimraf build",
+    "dist:build": "npm run clean && npm run test && npm run build",
+    "dist:publish": "cd build && npm publish --access public",
+    "test": "mocha test/**/*.js"
+  },
+  "keywords": [],
+  "author": "Kieran Simpson",
+  "license": "MIT",
+  "peerDependencies": {
+    "crocks": "^0.12.4"
+  },
+  "devDependencies": {
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^14.14.36",
+    "cpy-cli": "^3.1.1",
+    "crocks": "^0.12.4",
+    "hamjest": "^3.7.2",
+    "mocha": "^9.0.1",
+    "rimraf": "^3.0.2"
+  }
+}
