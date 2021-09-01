@@ -1,5 +1,6 @@
 "use strict";
 
+const { format } = require("util");
 const { Transform } = require("stream");
 
 const compose = require("crocks/helpers/compose");
@@ -10,8 +11,6 @@ const ifElse = require("crocks/logic/ifElse");
 const nAry = require("crocks/helpers/nAry");
 const partial = require("crocks/helpers/partial");
 const tap = require("crocks/helpers/tap");
-
-const printf = require("printf");
 
 const LOG_LEVELS = {
 	NONE: 0,
@@ -49,6 +48,9 @@ class LogLineStream extends Transform {
 // gteq :: (Number, Number) -> Boolean
 const gteq = (a, b) => a >= b
 
+// write :: WritableStream -> a -> Boolean
+const write = curry((stream, data) => stream.write(data))
+
 /*
  * `log` takes a writeable stream, the target log level, the level for the message, a
  * printf compatible string and some data.
@@ -62,7 +64,7 @@ const gteq = (a, b) => a >= b
 const log = curry((dest, target, level, message, data) =>
 	ifElse(
 		constant(gteq(target, level)),
-		tap(partial(printf, dest, `[${LOG_LEVEL_STRINGS[level]}]: ${message}`)),
+		tap(compose(write(dest), partial(format, `[${LOG_LEVEL_STRINGS[level]}]: ${message}`))),
 		identity
 	)(data)
 )

@@ -25,7 +25,6 @@
     "rimraf": "^3.0.2"
   },
   "dependencies": {
-    "@epistemology-factory/crocks-ext": "0.0.14",
-    "printf": "^0.6.1"
+    "@epistemology-factory/crocks-ext": "0.0.14"
   }
 }
