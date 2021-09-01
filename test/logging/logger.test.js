@@ -7,7 +7,7 @@ const { identity } = require("crocks/combinators");
 
 const { assertThat, is } = require("hamjest");
 
-const { LOG_LEVELS, LogLineStream, kliesliLog, log } = require("../../src/logging/logger");
+const { LOG_LEVELS, LogLineStream, log, logK } = require("../../src/logging/logger");
 const { throwContents } = require("@epistemology-factory/crocks-ext/utils");
 
 class CollectingStream extends Transform {
@@ -82,7 +82,7 @@ describe("logger", function() {
 		let loggerK
 
 		beforeEach(function() {
-			loggerK = kliesliLog(Result.Ok, logger);
+			loggerK = logK(Result.Ok, logger);
 		});
 
 		it("should log and wrap in Result", async function() {

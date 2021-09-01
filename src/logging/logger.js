@@ -80,11 +80,11 @@ const consoleLogger = (function() {
 }())
 
 /*
- * `kliesliLog` takes whatever is logged and wraps if in a Chainable. The resulting function
+ * `logK` takes whatever is logged and wraps if in a Chainable. The resulting function
  * can be used in Kliesli compositions.
  */
-// kliesliLog :: Chain m => (a -> m a) -> (Integer -> String -> a) -> Integer -> String -> a -> m a
-const kliesliLog = curry((fn, log) =>
+// logK :: Chain m => (a -> m a) -> (Integer -> String -> a) -> Integer -> String -> a -> m a
+const logK = curry((fn, log) =>
 	nAry(3, compose(fn, log))
 )
 
@@ -92,6 +92,6 @@ module.exports = {
 	LOG_LEVELS,
 	LogLineStream,
 	consoleLogger,
-	kliesliLog,
+	logK,
 	log
 }
