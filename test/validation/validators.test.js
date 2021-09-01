@@ -8,7 +8,7 @@ const identity = require("crocks/combinators/identity");
 const ifElse = require("crocks/logic/ifElse");
 
 const { joinPair } = require("@epistemology-factory/crocks-ext/String");
-const { throwError } = require("@epistemology-factory/crocks-ext/utils");
+const { throwContents, throwResult } = require("@epistemology-factory/crocks-ext/utils");
 
 const { resultValidator } = require("../../src/validation/validators");
 const { assertThat, is } = require("hamjest");
@@ -31,7 +31,7 @@ describe("validators", function() {
 		it("should return input when validation success", function() {
 			const input = 10
 
-			const result = resultValidator(validation, input).either(throwError, identity);
+			const result = resultValidator(validation, input).either(throwContents, identity);
 
 			assertThat(result, is(input));
 		});
@@ -39,7 +39,7 @@ describe("validators", function() {
 		it("should return error when validation fails", function() {
 			const input = 2
 
-			const result = resultValidator(validation, input).either(identity, throwError);
+			const result = resultValidator(validation, input).either(identity, throwResult);
 
 			assertThat(result, is("2 is not greater than 5"));
 		});
