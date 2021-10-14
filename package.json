@@ -7,7 +7,7 @@
     "clean": "rimraf build",
     "dist:build": "npm run clean && npm run test && npm run build",
     "dist:publish": "cd build && npm publish --access public",
-    "test": "mocha test/**/*.js"
+    "test": "mocha --recursive test"
   },
   "keywords": [],
   "author": "Kieran Simpson",
