@@ -1,12 +1,12 @@
 "use strict";
 
 const { makeValidator } = require("./validator");
-const { validationError } = require("../validation-error");
+const { validationFailure } = require("../validation-failure");
 const { CONSTRAINTS, DEFAULT_MESSAGES } = require("./constraints");
 
 const isDefined = makeValidator(
 	require("crocks/predicates/isDefined"),
-	validationError(
+	validationFailure(
 		CONSTRAINTS.IS_DEFINED,
 		DEFAULT_MESSAGES[CONSTRAINTS.IS_DEFINED]
 	)

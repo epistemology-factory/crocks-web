@@ -49,4 +49,8 @@ describe("errors", function() {
 			assertThat(result, is(anInternalServerError({}, `System error`, error)))
 		});
 	});
+
+	describe("validation errors", function() {
+
+	});
 });

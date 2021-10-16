@@ -52,7 +52,7 @@ describe("object validators", function() {
 
 			const result = isSchemaValid(schema, [], input).either(identity, throwResult);
 
-			assertThat(result, is(arrayOf(validationError([ "name" ]))));
+			assertThat(result, is(arrayOf(validationFailure([ "name" ]))));
 		});
 
 		it("should prepend parent prop to validation error path for nested objects", function() {
@@ -65,7 +65,7 @@ describe("object validators", function() {
 
 			const result = isSchemaValid(schema, [], input).either(identity, throwResult);
 
-			assertThat(result, is(arrayOf(validationError([ "address", "street" ]))));
+			assertThat(result, is(arrayOf(validationFailure([ "address", "street" ]))));
 		});
 
 		it("should return flat list of validation errors", function() {
@@ -78,8 +78,8 @@ describe("object validators", function() {
 			const result = isSchemaValid(schema, [], input).either(identity, throwResult);
 
 			assertThat(result, is(arrayOf(
-				validationError([ "name" ]),
-				validationError([ "address", "street" ])
+				validationFailure([ "name" ]),
+				validationFailure([ "address", "street" ])
 			)));
 		});
 	});
@@ -91,7 +91,7 @@ describe("object validators", function() {
 			hasItems(...matchers)
 		)
 	}
-	function validationError(path) {
+	function validationFailure(path) {
 		return allOf(
 			hasProperty("path", equalTo(path)),
 			hasProperty("constraints", equalTo({

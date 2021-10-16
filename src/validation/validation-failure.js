@@ -3,14 +3,14 @@
 const curry = require("crocks/helpers/curry");
 
 /**
- * @typedef {Object} ValidationError
+ * @typedef {Object} ValidationFailure
  * @property {string[]} path A path to the property that failed validation.
  * @property {Object<string, string>} constraints Constraints the failed, with error messages.
  * @property {any} value The value that failed validation.
  */
 
-// validationError :: String -> String -> [String] -> a -> ValidationError
-const validationError =
+// validationFailure :: String -> String -> [String] -> a -> ValidationFailure
+const validationFailure =
 	curry((constraint, message, path, value) => ({
 		path,
 		constraints: {
@@ -20,5 +20,5 @@ const validationError =
 	}))
 
 module.exports = {
-	validationError
+	validationFailure
 }

@@ -1,13 +1,13 @@
 "use strict";
 
 const { makeValidator } = require("./validator");
-const { validationError } = require("../validation-error");
+const { validationFailure } = require("../validation-failure");
 const { CONSTRAINTS, DEFAULT_MESSAGES } = require("./constraints");
 
-// isString :: [ String ] -> a -> Result ValidationError a
+// isString :: [ String ] -> a -> Result ValidationFailure a
 const isString = makeValidator(
 	require("crocks/predicates/isString"),
-	validationError(
+	validationFailure(
 		CONSTRAINTS.IS_STRING,
 		DEFAULT_MESSAGES[CONSTRAINTS.IS_STRING]
 	)

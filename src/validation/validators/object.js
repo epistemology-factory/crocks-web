@@ -33,7 +33,7 @@ const { prepend } = require("@epistemology-factory/crocks-ext/helpers");
 /*
  * @see https://www.freecodecamp.org/news/functional-programming-patterns-cookbook-3a0dfe2d7e0a
  */
-// isSchemaValid :: Schema -> [String] -> Object -> Result [ValidationError] Object
+// isSchemaValid :: Schema -> [String] -> Object -> Result [ValidationFailure] Object
 const isSchemaValid = curry((schema, path, object) =>
 	pipe(
 		toPairs,

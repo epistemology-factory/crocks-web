@@ -68,9 +68,9 @@ const internalServerError = errorResponse(500);
 const invalidMediaType = (headers) => errorResponse(415, headers, "Invalid media type", {})
 
 /**
- * Converts ValidationErrors into a Bad Request response.
+ * Converts ValidationFailures into a Bad Request response.
  */
-// invalidInput :: Object -> [ValidationError] -> Object
+// invalidInput :: Object -> [ValidationFailure] -> Object
 const invalidInput = curry((headers) =>
 	pipe(
 		map(pipe(
