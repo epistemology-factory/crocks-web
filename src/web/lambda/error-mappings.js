@@ -10,16 +10,16 @@ const identity = require("crocks/combinators/identity");
 const isDefined = require("crocks/predicates/isDefined");
 const flip = require("crocks/combinators/flip");
 const map = require("crocks/pointfree/map");
+const mapProps = require("crocks/helpers/mapProps");
 const option = require("crocks/pointfree/option");
+const pick = require("crocks/helpers/pick");
 const pipe = require("crocks/helpers/pipe");
 const safe = require("crocks/Maybe/safe");
 const substitution = require("crocks/combinators/substitution");
 
-const { internalServerError } = require("./responses");
+const { join } = require("@epistemology-factory/crocks-ext/String");
 
-const ERROR_TYPES = {
-	VALIDATION_ERRORS: "validation-errors"
-}
+const { badRequest, internalServerError } = require("./responses");
 
 // genericError :: (Object -> String) -> Object -> Object
 const genericError = 	substitution(flip(internalServerError({})))
@@ -48,7 +48,19 @@ const mapError = curry((mappings) =>
 	)
 )
 
+// mapValidationError :: Object -> Object -> Object
+const mapValidationError = curry((headers) =>
+	pipe(
+		({ failures }) => failures,
+		map(pipe(
+			pick([ "path", "constraints" ]),
+			mapProps({ path: join(".") })
+		)),
+		badRequest(headers, "Invalid input")
+	)
+)
+
 module.exports = {
-	ERROR_TYPES,
-	mapError
+	mapError,
+	mapValidationError
 }

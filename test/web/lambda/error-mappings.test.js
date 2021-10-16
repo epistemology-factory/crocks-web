@@ -5,8 +5,12 @@ const { converge, identity } = require("crocks");
 const { assertThat, is } = require("hamjest");
 
 const { internalServerError } = require("../../../src/web/lambda/responses");
-const { mapError } = require("../../../src/web/lambda/error-mappings");
-const { anInternalServerError } = require("./matchers/response");
+const { mapError, mapValidationError } = require("../../../src/web/lambda/error-mappings");
+const { validationError } = require("../../../src/web/lambda/errors");
+const { validationFailure } = require("../../../src/validation/validation-failure");
+
+const { aBadRequest, anInternalServerError } = require("./matchers/response");
+const { CONSTRAINTS, DEFAULT_MESSAGES } = require("../../../src/validation/validators");
 
 describe("errors", function() {
 	describe("mapping errors", function() {
@@ -50,7 +54,28 @@ describe("errors", function() {
 		});
 	});
 
-	describe("validation errors", function() {
+	describe("invalid input", function() {
+		const headers = { "x-result": true };
+		const failure = validationFailure(
+			CONSTRAINTS.IS_DEFINED,
+			DEFAULT_MESSAGES[CONSTRAINTS.IS_DEFINED],
+			[ "a", "b" ],
+			null
+		);
 
-	});
+		const error = validationError([ failure ]);
+
+		it("should map validation error", function() {
+			const resp = mapValidationError(headers, error);
+
+			assertThat(resp, is(aBadRequest(headers, "Invalid input", [
+				{
+					path: "a.b",
+					constraints: {
+						[CONSTRAINTS.IS_DEFINED]: DEFAULT_MESSAGES[CONSTRAINTS.IS_DEFINED]
+					}
+				}
+			])))
+		})
+	})
 });

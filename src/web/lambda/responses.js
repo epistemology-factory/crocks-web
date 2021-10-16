@@ -6,15 +6,12 @@ const compose = require("crocks/helpers/compose");
 const curry = require("crocks/helpers/curry");
 const isArray = require("crocks/predicates/isArray");
 const isObject = require("crocks/predicates/isObject");
-const map = require("crocks/pointfree/map");
-const mapProps = require("crocks/helpers/mapProps");
 const option = require("crocks/pointfree/option");
 const or = require("crocks/logic/or");
-const pick = require("crocks/helpers/pick");
 const pipe = require("crocks/helpers/pipe");
 const safe = require("crocks/Maybe/safe");
 
-const { join, stringify } = require("@epistemology-factory/crocks-ext/String");
+const { stringify } = require("@epistemology-factory/crocks-ext/String");
 
 /**
  * Transforms an object to JSON, or returns an empty object.
@@ -67,24 +64,9 @@ const internalServerError = errorResponse(500);
 // invalidMediaType :: Object -> Object
 const invalidMediaType = (headers) => errorResponse(415, headers, "Invalid media type", {})
 
-/**
- * Converts ValidationFailures into a Bad Request response.
- */
-// invalidInput :: Object -> [ValidationFailure] -> Object
-const invalidInput = curry((headers) =>
-	pipe(
-		map(pipe(
-			pick([ "path", "constraints" ]),
-			mapProps({ path: join(".") })
-		)),
-		badRequest(headers, "Invalid input")
-	)
-)
-
 module.exports = {
 	badRequest,
 	internalServerError,
-	invalidInput,
 	invalidMediaType,
 	respondWith,
 	response
