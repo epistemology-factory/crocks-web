@@ -3,6 +3,9 @@
 const { format } = require("util");
 const { Transform } = require("stream");
 
+const Async = require("crocks/Async");
+const Result = require("crocks/Result");
+
 const compose = require("crocks/helpers/compose");
 const constant = require("crocks/combinators/constant");
 const curry = require("crocks/helpers/curry");
@@ -88,10 +91,18 @@ const logK = curry((fn, log) =>
 	nAry(3, compose(fn, log))
 )
 
+// asyncLogK :: (Integer -> String -> a -> a) -> Integer -> String -> a -> Async a
+const asyncLogK = logK(Async.Resolved)
+
+// resultLogK :: (Integer -> String -> a -> a) -> Integer -> String -> a -> Result a
+const resultLogK = logK(Result.Ok)
+
 module.exports = {
 	LOG_LEVELS,
 	LogLineStream,
+	asyncLogK,
 	consoleLogger,
 	logK,
-	log
+	log,
+	resultLogK
 }
