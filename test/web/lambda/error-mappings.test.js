@@ -5,7 +5,7 @@ const { converge, identity } = require("crocks");
 const { assertThat, is } = require("hamjest");
 
 const { internalServerError } = require("../../../src/web/lambda/responses");
-const { mapError } = require("../../../src/web/lambda/errors");
+const { mapError } = require("../../../src/web/lambda/error-mappings");
 const { anInternalServerError } = require("./matchers/response");
 
 describe("errors", function() {
