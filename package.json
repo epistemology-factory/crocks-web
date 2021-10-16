@@ -1,6 +1,6 @@
 {
   "name": "@epistemology-factory/crocks-web",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Functions to help write web applications with crocks",
   "scripts": {
     "build": "cpy --cwd=src --parents . ../build && cpy package*.json README.md LICENSE build",
