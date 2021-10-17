@@ -75,6 +75,7 @@ const log = curry((dest, target, level, message, data) =>
 /*
  * Fugly as `pipe` returns the dest stream, not the source.
  */
+// consoleLogger :: Integer -> Integer -> String -> a -> a
 const consoleLogger = (function() {
 	let dest = new LogLineStream();
 	dest.pipe(process.stdout)
