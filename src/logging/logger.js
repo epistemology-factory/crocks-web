@@ -100,6 +100,7 @@ const resultLogK = logK(Result.Ok)
 
 module.exports = {
 	LOG_LEVELS,
+	LOG_LEVEL_STRINGS,
 	LogLineStream,
 	asyncLogK,
 	consoleLogger,
