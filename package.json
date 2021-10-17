@@ -13,7 +13,8 @@
   "author": "Kieran Simpson",
   "license": "MIT",
   "peerDependencies": {
-    "crocks": "^0.12.4"
+    "crocks": "^0.12.4",
+    "hamjest": "^3.7.2"
   },
   "devDependencies": {
     "@types/mocha": "^8.2.2",

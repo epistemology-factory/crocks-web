@@ -9,7 +9,7 @@ const { mapError, mapValidationError } = require("../../../src/web/lambda/error-
 const { validationError } = require("../../../src/web/lambda/errors");
 const { validationFailure } = require("../../../src/validation/validation-failure");
 
-const { aBadRequest, anInternalServerError } = require("./matchers/response");
+const { aBadRequest, anInternalServerError } = require("../../../src/test/hamjest/lambda/matchers/response");
 const { CONSTRAINTS, DEFAULT_MESSAGES } = require("../../../src/validation/validators");
 
 describe("errors", function() {
