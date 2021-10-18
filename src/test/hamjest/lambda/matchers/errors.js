@@ -1,6 +1,6 @@
 "use strict";
 
-const { allOf, equalTo, hasProperties } = require("hamjest");
+const { allOf, equalTo, hasProperties, hasProperty } = require("hamjest");
 
 const { ERROR_TYPES } = require("../../../../web/lambda/errors");
 
@@ -25,7 +25,7 @@ const aMissingEnvVar = (name) => anEnvVarError(ERROR_TYPES.MISSING_ENV_VAR, name
 const aValidationError = (failures) =>
 	allOf(
 		anError(ERROR_TYPES.VALIDATION_ERROR),
-		failures
+		hasProperty("failures", failures)
 	)
 
 module.exports = {
