@@ -1,15 +1,21 @@
 "use strict";
 
-const { identity, unsetPath } = require("crocks");
+const { Result, identity, unsetPath } = require("crocks");
 
-const { assertThat, is, allOf, hasSize, hasItem } = require("hamjest");
+const {
+	allOf,
+	assertThat,
+	hasItem,
+	hasSize,
+	is, equalTo
+} = require("hamjest");
 
-const { throwContents } = require("@epistemology-factory/crocks-ext/utils");
+const { throwContents, throwResult } = require("@epistemology-factory/crocks-ext/utils");
 
 const { isDefined } = require("../../../src/validation/validators/common");
 const { isSchemaValid } = require("../../../src/validation/validators");
 const { isString } = require("../../../src/validation/validators/strings");
-const { validateRequest } = require("../../../src/web/lambda/request");
+const { parseBody, parseJSON, validateRequest } = require("../../../src/web/lambda/request");
 const { validators } = require("../../../src/validation/validators/validator");
 
 const { aValidationError } = require("../../../src/test/hamjest/lambda/matchers/errors");
@@ -48,6 +54,59 @@ describe("request", function() {
 					)))
 				)
 			));
+		})
+	});
+
+	describe("parseBody", function() {
+		const parse = () => () => Result.Ok({ a: 1 })
+
+		it("should return error if body missing", async function() {
+			const result = parseBody(parse, {}).either(identity, throwResult)
+
+			assertThat(result, is(aValidationError(hasItem(aValidationFailure(
+				[ "body" ],
+				CONSTRAINTS.IS_DEFINED,
+				DEFAULT_MESSAGES[CONSTRAINTS.IS_DEFINED],
+				undefined
+			)))));
+		});
+
+		it("should return error if body not parseable", async function() {
+			const error = { type: "an-error" }
+			const notParseable = () => () => Result.Err(error);
+
+			const result = parseBody(notParseable, { body: "" }).either(identity, throwResult)
+
+			assertThat(result, is(error));
+		});
+
+		it("should return body", async function() {
+			const result = parseBody(parse, { body: "" }).either(throwContents, identity)
+
+			assertThat(result, is({ a: 1 }));
+		});
+	});
+
+	describe("parse json", function() {
+		it("should return error if input not parseable", function() {
+			const data = "fdasfasfadsf"
+			const path = [ "body" ];
+
+			const result = parseJSON(path, data).either(identity, throwResult)
+
+			assertThat(result, is(aValidationError(hasItem(aValidationFailure(
+				path,
+				CONSTRAINTS.IS_JSON,
+				DEFAULT_MESSAGES[CONSTRAINTS.IS_JSON],
+				data
+			)))));
+		});
+
+		it("should parse json input", function() {
+			const data = { a: 1}
+			const result = parseJSON([ "body" ], JSON.stringify(data)).either(throwContents, identity)
+
+			assertThat(result, is(equalTo(data)));
 		})
 	});
 });
