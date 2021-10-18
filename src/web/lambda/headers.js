@@ -68,6 +68,7 @@ const getHeader = curry((header) =>
 	)
 )
 
+// getHeader :: a -> String -> b -> c
 const getHeaderOr = curry((value, header) =>
 	compose(option(value), getHeader(header))
 )
