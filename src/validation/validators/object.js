@@ -16,12 +16,25 @@ const traverse = require("crocks/pointfree/traverse");
 
 const { prepend } = require("@epistemology-factory/crocks-ext/helpers");
 
+const { makeValidator } = require("./validator");
+const { validationFailure } = require("../validation-failure");
+const { CONSTRAINTS, DEFAULT_MESSAGES } = require("./constraints");
+
 /**
  *  Schema :: {
  *    [string]: [String] -> a -> Result String a
  *    [string]: [String] -> a -> Result [String] a
  *  }
  */
+
+// isObject :: [ String ] -> a -> Result ValidationFailure a
+const isObject = makeValidator(
+	require("crocks/predicates/isObject"),
+	validationFailure(
+		CONSTRAINTS.IS_OBJECT,
+		DEFAULT_MESSAGES[CONSTRAINTS.IS_OBJECT]
+	)
+)
 
 /**
  * Allows an object to validated against a schema
@@ -53,5 +66,6 @@ const isSchemaValid = curry((schema, path, object) =>
 // TODO: Optional props validator
 
 module.exports = {
+	isObject,
 	isSchemaValid
 }
