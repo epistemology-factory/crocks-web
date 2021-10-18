@@ -50,13 +50,13 @@ describe("config", function() {
 			const name = "LOG_LEVEL";
 			const input = setProp(name, "foo", env);
 
-			const result = getLogger(logger)(input).either(identity, throwContents);
+			const result = getLogger(logger)(input).either(identity, throwResult);
 
 			assertThat(result, is(anInvalidEnvVar(name)))
 		});
 
 		function logMessage(env) {
-			const result = getLogger(logger)(env).either(throwResult, identity).valueOf();
+			const result = getLogger(logger)(env).either(throwContents, identity).valueOf();
 			assertThat(result, hasProperty("logger"))
 
 			result.logger(LOG_LEVELS.DEBUG, message, "");

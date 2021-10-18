@@ -20,7 +20,7 @@ describe("validator", function() {
 
 		it("should return error when value is undefined", function() {
 			const value = undefined;
-			const result = validator(path)(value).either(identity, throwContents);
+			const result = validator(path)(value).either(identity, throwResult);
 
 			assertThat(result, is(aValidationFailure(
 				path,
@@ -32,7 +32,7 @@ describe("validator", function() {
 
 		it("should return error when value is not string", function() {
 			const value = 123;
-			const result = validator(path)(value).either(identity, throwContents);
+			const result = validator(path)(value).either(identity, throwResult);
 
 			assertThat(result, is(aValidationFailure(
 				path,
@@ -45,7 +45,7 @@ describe("validator", function() {
 		it("should return value", function() {
 			const value = "foo";
 
-			const result = validator(path)(value).either(throwResult, identity);
+			const result = validator(path)(value).either(throwContents, identity);
 
 			assertThat(result, is(value));
 		})
