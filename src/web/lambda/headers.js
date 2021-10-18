@@ -52,7 +52,7 @@ const variations = [
 	getHeaderVariation(capitalised)
 ]
 
-/*
+/**
  * `getHeader` looks for a header in an object, but will check for the presence of the key
  * taking into account variations in how headers are capitalised.
  *

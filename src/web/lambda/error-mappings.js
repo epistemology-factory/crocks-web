@@ -39,6 +39,16 @@ const getErrorHandler = curry((mappings) =>
 	)
 )
 
+/**
+ * `mapError` is a function which converts an error to an HTTP response.
+ *
+ * `mapError` takes a table of mappings from error type to function of type (Object -> Object).
+ * When an error object is provided, mapError will look up the mapping function and apply it to
+ * the error, returning the response.
+ *
+ * If an unknown error type, or an value without a type is passed, the result is a HTTP 500
+ * response.
+ */
 // mapError :: Object -> Object -> Object
 const mapError = curry((mappings) =>
 	converge(

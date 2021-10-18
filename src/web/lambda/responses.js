@@ -24,7 +24,7 @@ const toJSON =
 	)
 
 /**
- * Creates a response object suitable to result from a lambda to API Gateway.
+ * Creates a response object suitable to result from a Lambda to API Gateway.
  *
  * Will always return a JSON body, otherwise API Gateway doesn't like the response.
  */
