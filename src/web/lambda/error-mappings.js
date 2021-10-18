@@ -19,7 +19,7 @@ const substitution = require("crocks/combinators/substitution");
 
 const { join } = require("@epistemology-factory/crocks-ext/String");
 
-const { badRequest, internalServerError } = require("./responses");
+const { badRequest, internalServerError, unsupportedMediaType } = require("./responses");
 
 // genericError :: (Object -> String) -> Object -> Object
 const genericError = 	substitution(flip(internalServerError({})))
@@ -58,6 +58,11 @@ const mapError = curry((mappings) =>
 	)
 )
 
+// mapInvalidContentType :: Object -> Object -> Object
+const mapInvalidContentType = curry((headers) =>
+	({ contentType }) => unsupportedMediaType(headers, contentType)
+)
+
 // mapValidationError :: Object -> Object -> Object
 const mapValidationError = curry((headers) =>
 	pipe(
@@ -72,5 +77,6 @@ const mapValidationError = curry((headers) =>
 
 module.exports = {
 	mapError,
+	mapInvalidContentType,
 	mapValidationError
 }

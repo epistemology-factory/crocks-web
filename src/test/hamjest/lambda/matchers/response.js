@@ -25,8 +25,17 @@ const aBadRequest = partial(anErrorResponse, 400)
 // anInternalServerError :: (Object, String, a) -> Matcher
 const anInternalServerError = partial(anErrorResponse, 500)
 
+// anUnsupportedMediaType :: (Object, String) -> Matcher
+const anUnsupportedMediaType = (headers, contentType) => anErrorResponse(
+	415,
+	headers,
+	`'${contentType}' is unsupported`,
+	{}
+)
+
 module.exports = {
 	aBadRequest,
 	anInternalServerError,
+	anUnsupportedMediaType,
 	aResponse
 }

@@ -10,7 +10,7 @@ const { throwContents, throwResult } = require("@epistemology-factory/crocks-ext
 const { assertThat, hasProperty, is } = require("hamjest");
 
 const CollectingStream = require("../../../src/test/collecting-stream");
-const { anInvalidEnvVar } = require("../../../src/test/hamjest/lambda/matchers/errors");
+const { anInvalidEnvVarError } = require("../../../src/test/hamjest/lambda/matchers/errors");
 const { aLogMessage } = require("../../../src/test/hamjest/lambda/matchers/logger");
 
 describe("config", function() {
@@ -52,7 +52,7 @@ describe("config", function() {
 
 			const result = getLogger(logger)(input).either(identity, throwResult);
 
-			assertThat(result, is(anInvalidEnvVar(name)))
+			assertThat(result, is(anInvalidEnvVarError(name)))
 		});
 
 		function logMessage(env) {

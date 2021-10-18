@@ -18,9 +18,15 @@ const anEnvVarError = (type, name) =>
 		})
 	)
 
-const anInvalidEnvVar = (name) => anEnvVarError(ERROR_TYPES.INVALID_ENV_VAR, name)
+const anInvalidEnvVarError = (name) => anEnvVarError(ERROR_TYPES.INVALID_ENV_VAR, name)
 
-const aMissingEnvVar = (name) => anEnvVarError(ERROR_TYPES.MISSING_ENV_VAR, name)
+const aMissingEnvVarError = (name) => anEnvVarError(ERROR_TYPES.MISSING_ENV_VAR, name)
+
+const anInvalidContentTypeError = (contentType) =>
+	allOf(
+		anError(contentType),
+		hasProperty("contentType", equalTo(contentType))
+	)
 
 const aValidationError = (failures) =>
 	allOf(
@@ -30,7 +36,8 @@ const aValidationError = (failures) =>
 
 module.exports = {
 	anError,
-	anInvalidEnvVar,
-	aMissingEnvVar,
+	anInvalidContentTypeError,
+	anInvalidEnvVarError,
+	aMissingEnvVarError,
 	aValidationError
 }

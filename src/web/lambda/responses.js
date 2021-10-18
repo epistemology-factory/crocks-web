@@ -61,13 +61,15 @@ const badRequest = errorResponse(400);
 // internalServerError :: Object -> String -> a -> Object
 const internalServerError = errorResponse(500);
 
-// invalidMediaType :: Object -> Object
-const invalidMediaType = (headers) => errorResponse(415, headers, "Invalid media type", {})
+// unsupportedMediaType :: Object -> String -> Object
+const unsupportedMediaType = curry((headers, contentType) =>
+	errorResponse(415, headers, `'${contentType}' is unsupported`, {})
+)
 
 module.exports = {
 	badRequest,
 	internalServerError,
-	invalidMediaType,
 	respondWith,
-	response
+	response,
+	unsupportedMediaType
 }
