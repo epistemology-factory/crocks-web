@@ -2,7 +2,7 @@
 
 const { allOf, equalTo, hasProperties } = require("hamjest");
 
-const { ERROR_TYPES } = require("../../../../../src/web/lambda/errors");
+const { ERROR_TYPES } = require("../../../../web/lambda/errors");
 
 // anError = (String) -> Matcher
 const anError = (type) =>
