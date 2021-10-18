@@ -22,8 +22,15 @@ const anInvalidEnvVar = (name) => anEnvVarError(ERROR_TYPES.INVALID_ENV_VAR, nam
 
 const aMissingEnvVar = (name) => anEnvVarError(ERROR_TYPES.MISSING_ENV_VAR, name)
 
+const aValidationError = (failures) =>
+	allOf(
+		anError(ERROR_TYPES.VALIDATION_ERROR),
+		failures
+	)
+
 module.exports = {
 	anError,
 	anInvalidEnvVar,
-	aMissingEnvVar
+	aMissingEnvVar,
+	aValidationError
 }
