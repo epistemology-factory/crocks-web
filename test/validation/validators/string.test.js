@@ -1,0 +1,37 @@
+"use strict";
+
+const { identity } = require("crocks");
+
+const { assertThat, is } = require("hamjest");
+
+const { throwResult, throwContents } = require("@epistemology-factory/crocks-ext/utils");
+
+const { isISODate, CONSTRAINTS, DEFAULT_MESSAGES } = require("../../../src/validation/validators");
+
+const { aValidationFailure } = require(
+	"../../../src/test/hamjest/lambda/matchers/validation-failure");
+
+describe("string validators", function() {
+	const path = [ "a" ]
+
+	describe("isISODate", function() {
+		it("should return error when string not ISO date", function() {
+			const value = "dfdafas";
+			const result = isISODate(path)(value).either(identity, throwResult)
+
+			assertThat(result, is(aValidationFailure(
+				path,
+				CONSTRAINTS.IS_ISO_DATE,
+				DEFAULT_MESSAGES[CONSTRAINTS.IS_ISO_DATE],
+				value
+			)));
+		});
+
+		it("should match ISO date", function() {
+			const value = "2021-05-21";
+			const result = isISODate(path)(value).either(throwContents, identity)
+
+			assertThat(result, is(value));
+		});
+	});
+});

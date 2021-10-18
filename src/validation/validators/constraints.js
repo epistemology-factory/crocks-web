@@ -2,12 +2,14 @@
 
 const CONSTRAINTS = {
 	IS_DEFINED: "is-defined",
+	IS_ISO_DATE: "is-iso-date",
 	IS_OBJECT: "is-object",
 	IS_STRING: "is-string",
 }
 
 const DEFAULT_MESSAGES = {
 	[CONSTRAINTS.IS_DEFINED]: "should not be null or undefined",
+	[CONSTRAINTS.IS_ISO_DATE]: "should be an ISO date",
 	[CONSTRAINTS.IS_OBJECT]: "must be an object",
 	[CONSTRAINTS.IS_STRING]: "must be a string",
 }
