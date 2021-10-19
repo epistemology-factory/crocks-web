@@ -15,7 +15,7 @@ const { throwContents, throwResult } = require("@epistemology-factory/crocks-ext
 const { isDefined } = require("../../../src/validation/validators/common");
 const { isSchemaValid } = require("../../../src/validation/validators");
 const { isString } = require("../../../src/validation/validators/strings");
-const { parseBody, parseJSON, validateRequest } = require("../../../src/web/lambda/request");
+const { parseBody, parseJSON, validateBody, validateRequest } = require("../../../src/web/lambda/request");
 const { validators } = require("../../../src/validation/validators/validator");
 
 const { aValidationError } = require("../../../src/test/hamjest/lambda/matchers/errors");
@@ -51,10 +51,38 @@ describe("request", function() {
 						CONSTRAINTS.IS_DEFINED,
 						DEFAULT_MESSAGES[CONSTRAINTS.IS_DEFINED],
 						undefined
-					)))
+					))
 				)
-			));
-		})
+			)));
+		});
+	});
+
+	describe("validateBody", function() {
+		const body = {
+			message: "Hello World"
+		}
+
+		const schema = {
+			message: validators(isDefined, isString)
+		};
+
+		it("should return validation error when schema validation fails", function() {
+			const input = unsetPath([ "message" ], body);
+
+			const result = validateBody(schema)(input).either(identity, throwContents)
+
+			assertThat(result, is(aValidationError(
+				allOf(
+					hasSize(1),
+					hasItem(aValidationFailure(
+						["body", "message"],
+						CONSTRAINTS.IS_DEFINED,
+						DEFAULT_MESSAGES[CONSTRAINTS.IS_DEFINED],
+						undefined
+					))
+				)
+			)));
+		});
 	});
 
 	describe("parseBody", function() {

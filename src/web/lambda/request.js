@@ -50,8 +50,16 @@ const validateRequest = (schema) =>
 		bimap(validationError, identity)
 	)
 
+// validateBody :: Schema -> Object -> Result Object
+const validateBody = (schema) =>
+	pipe(
+		isSchemaValid(schema, [ "body" ]),
+		bimap(validationError, identity)
+	)
+
 module.exports = {
 	parseBody,
 	parseJSON,
+	validateBody,
 	validateRequest
 }
