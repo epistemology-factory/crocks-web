@@ -58,8 +58,14 @@ const errorResponse = curry((code, headers, message, cause) =>
 // badRequest :: Object -> String -> a -> Object
 const badRequest = errorResponse(400);
 
+// forbidden :: Object -> Object
+const forbidden = (headers) => response(403, headers, { message: "Forbidden" })
+
 // internalServerError :: Object -> String -> a -> Object
 const internalServerError = errorResponse(500);
+
+// unauthorised :: Object -> Object
+const unauthorised = (headers) => response(401, headers, { message: "Unauthorised" })
 
 // unsupportedMediaType :: Object -> String -> Object
 const unsupportedMediaType = curry((headers, contentType) =>
@@ -68,8 +74,10 @@ const unsupportedMediaType = curry((headers, contentType) =>
 
 module.exports = {
 	badRequest,
+	forbidden,
 	internalServerError,
 	respondWith,
 	response,
+	unauthorised,
 	unsupportedMediaType
 }
