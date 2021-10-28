@@ -12,7 +12,7 @@ const pipe = require("crocks/helpers/pipe");
 const { getProp } = require("@epistemology-factory/crocks-ext/Result");
 
 const { LOG_LEVELS, LOG_LEVEL_STRINGS } = require("../../logging/logger");
-const { invalidEnvVar } = require("./errors");
+const { invalidEnvVar } = require("../errors");
 
 // getLogger :: (Integer -> Integer -> String -> a -> a) -> Object -> Result Object Assign
 const getLogger = (logger) =>

@@ -15,7 +15,7 @@ const { parse } = require("@epistemology-factory/crocks-ext/node/json");
 
 const { invalidJsonFailure } = require("../../validation/validators/json");
 const { isSchemaValid, isDefinedFailure } = require("../../validation/validators");
-const { validationError } = require("./errors");
+const { validationError } = require("../errors");
 
 // toArray :: a -> [ a ]
 const toArray = (x) => [ x ]

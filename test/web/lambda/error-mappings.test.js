@@ -10,7 +10,7 @@ const {
 	mapInvalidContentType,
 	mapValidationError
 } = require("../../../src/web/lambda/error-mappings");
-const { invalidContentType, validationError } = require("../../../src/web/lambda/errors");
+const { invalidContentType, validationError } = require("../../../src/web/errors");
 const { validationFailure } = require("../../../src/validation/validation-failure");
 
 const {
