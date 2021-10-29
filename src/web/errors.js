@@ -14,8 +14,6 @@ const { join } = require("@epistemology-factory/crocks-ext/String");
 const ERROR_TYPES = {
 	INVALID_CONTENT_TYPE: "invalid-content-type",
 	INVALID_ENV_VAR: "invalid-env-var",
-
-	/*  */
 	INVALID_STATE: "invalid-state",
 	MISSING_ENV_VAR: "missing-env-var",
 	VALIDATION_ERROR: "validation-error"
