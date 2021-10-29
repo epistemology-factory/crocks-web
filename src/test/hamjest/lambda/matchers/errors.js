@@ -18,15 +18,25 @@ const anEnvVarError = (type, name) =>
 		})
 	)
 
-const anInvalidEnvVarError = (name) => anEnvVarError(ERROR_TYPES.INVALID_ENV_VAR, name)
-
-const aMissingEnvVarError = (name) => anEnvVarError(ERROR_TYPES.MISSING_ENV_VAR, name)
-
 const anInvalidContentTypeError = (contentType) =>
 	allOf(
 		anError(contentType),
 		hasProperty("contentType", equalTo(contentType))
 	)
+
+const anInvalidEnvVarError = (name) => anEnvVarError(ERROR_TYPES.INVALID_ENV_VAR, name)
+
+const anInvalidStateError = (reason) =>
+	allOf(
+		anError(ERROR_TYPES.INVALID_STATE),
+		hasProperty("reason", reason)
+	)
+
+const aMissingEnvVarError = (name) => anEnvVarError(ERROR_TYPES.MISSING_ENV_VAR, name)
+
+const aMissingPropError = (prop) => anInvalidStateError(`Missing prop '${prop}'`)
+
+const aMissingPathError = (path) => aMissingPropError(path.join("."))
 
 const aValidationError = (failures) =>
 	allOf(
@@ -38,6 +48,9 @@ module.exports = {
 	anError,
 	anInvalidContentTypeError,
 	anInvalidEnvVarError,
+	anInvalidStateError,
 	aMissingEnvVarError,
+	aMissingPropError,
+	aMissingPathError,
 	aValidationError
 }
