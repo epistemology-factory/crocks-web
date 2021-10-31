@@ -14,10 +14,10 @@ const safe = require("crocks/Maybe/safe");
 const { stringify } = require("@epistemology-factory/crocks-ext/String");
 
 /**
- * Transforms an object to JSON, or returns an empty object.
+ * Transforms an object to a string, or returns an empty object string.
  */
-// toJSON :: a -> String
-const toJSON =
+// toJSONString :: a -> String
+const toJSONString =
 	pipe(
 		compose(option({}), safe(or(isArray, isObject))),
 		stringify
@@ -32,7 +32,7 @@ const toJSON =
 const response = curry((code, headers, body) => ({
 		statusCode: code,
 		headers,
-		body: toJSON(body)
+		body: toJSONString(body)
 	})
 )
 
