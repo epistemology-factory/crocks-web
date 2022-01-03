@@ -56,7 +56,7 @@ describe("config", function() {
 		});
 
 		function logMessage(env) {
-			const result = getLogger(logger)(env).either(throwContents, identity).valueOf();
+			const result = getLogger(logger)(env).either(throwContents, identity);
 			assertThat(result, hasProperty("logger"))
 
 			result.logger(LOG_LEVELS.DEBUG, message, "");
