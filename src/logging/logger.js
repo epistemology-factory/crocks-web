@@ -1,6 +1,6 @@
 "use strict";
 
-const { format } = require("util");
+const { format } = require("lacuna-format");
 const { Transform } = require("stream");
 
 const Async = require("crocks/Async");
