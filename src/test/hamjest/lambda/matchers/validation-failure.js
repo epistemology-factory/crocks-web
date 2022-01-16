@@ -29,6 +29,15 @@ const isObjectFailure = (path, value) => {
 	);
 }
 
+const isIntStringFailure = (path, value) => {
+	return aValidationFailure(
+		path,
+		CONSTRAINTS.IS_INT_STRING,
+		DEFAULT_MESSAGES[CONSTRAINTS.IS_INT_STRING],
+		value
+	);
+}
+
 const isStringFailure = (path, value) => {
 	return aValidationFailure(
 		path,
@@ -41,6 +50,7 @@ const isStringFailure = (path, value) => {
 module.exports = {
 	aValidationFailure,
 	isDefinedFailure,
+	isIntStringFailure,
 	isObjectFailure,
 	isStringFailure
 }
