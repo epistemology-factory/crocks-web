@@ -27,7 +27,17 @@ const isString = makeValidator(
 	)
 )
 
+// isIntString :: [ String ] -> a -> Result ValidationFailure a
+const isIntString = makeValidator(
+	matchesRegex(/^\d+$/),
+	validationFailure(
+		CONSTRAINTS.IS_INT_STRING,
+		DEFAULT_MESSAGES[CONSTRAINTS.IS_INT_STRING]
+	)
+)
+
 module.exports = {
+	isIntString,
 	isISODate,
 	isString
 }
