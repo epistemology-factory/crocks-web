@@ -35,7 +35,7 @@ const parseJSON = curry((path) =>
 	)
 )
 
-// parseBody :: (a -> Result Object) -> Object -> Result Object
+// parseBody :: ([ String ] -> a -> Result Object) -> Object -> Result Object
 const parseBody = curry((parse) =>
 	pipeK(
 		getPath(missingBody, [ "body" ]),
