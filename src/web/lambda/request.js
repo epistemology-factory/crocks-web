@@ -12,17 +12,15 @@ const pipeK = require("crocks/helpers/pipeK");
 
 const { getPath } = require("@epistemology-factory/crocks-ext/Result");
 const { parse } = require("@epistemology-factory/crocks-ext/node/json");
+const { zipArgs } = require("@epistemology-factory/crocks-ext/helpers");
 
 const { invalidJsonFailure } = require("../../validation/validators/json");
 const { isSchemaValid, isDefinedFailure } = require("../../validation/validators");
 const { validationError } = require("../errors");
 
-// toArray :: a -> [ a ]
-const toArray = (x) => [ x ]
-
 const missingBody =
 	pipe(
-		compose(toArray, flip(isDefinedFailure, undefined)),
+		compose(zipArgs, flip(isDefinedFailure, undefined)),
 		validationError
 	)
 
@@ -30,7 +28,7 @@ const missingBody =
 const parseJSON = curry((path) =>
 	converge(
 		flip(bimap, identity),
-		compose(constant, validationError, toArray, invalidJsonFailure(path)),
+		compose(constant, validationError, zipArgs, invalidJsonFailure(path)),
 		parse
 	)
 )
