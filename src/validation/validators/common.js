@@ -1,5 +1,7 @@
 "use strict";
 
+const not = require("crocks/logic/not");
+
 const { makeValidator } = require("./validator");
 const { validationFailure } = require("../validation-failure");
 const { CONSTRAINTS, DEFAULT_MESSAGES } = require("./constraints");
@@ -15,7 +17,16 @@ const isDefined = makeValidator(
 	isDefinedFailure
 )
 
+const isNotEmpty = makeValidator(
+	not(require("crocks/predicates/isEmpty")),
+	validationFailure(
+		CONSTRAINTS.IS_NOT_EMPTY,
+		DEFAULT_MESSAGES[CONSTRAINTS.IS_NOT_EMPTY]
+	)
+);
+
 module.exports = {
 	isDefined,
-	isDefinedFailure
+	isDefinedFailure,
+	isNotEmpty
 }
