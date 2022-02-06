@@ -48,6 +48,6 @@ describe("validator", function() {
 			const result = validator(path)(value).either(throwContents, identity);
 
 			assertThat(result, is(value));
-		})
+		});
 	});
 });

@@ -22,7 +22,7 @@ const makeValidator = curry((pred, err) => (path) =>
 	)
 )
 
-// validators :: Foldable f => f ([ String ] -> a -> Result ValidationFailure a)
+// validators :: Foldable f => f ([ String ] -> a -> Result ValidationFailure a) -> [ String ] -> a -> Result ValidationFailure a
 const validators = (...validators) =>
 	pipe(
 		applyFunctor(validators),
