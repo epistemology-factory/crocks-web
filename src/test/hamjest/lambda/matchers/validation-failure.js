@@ -11,6 +11,15 @@ const aValidationFailure = (path, constraint, message, value) =>
 		hasProperty("value", equalTo(value))
 	)
 
+const isBoolStringFailure = (path, value) => {
+	return aValidationFailure(
+		path,
+		CONSTRAINTS.IS_BOOL_STRING,
+		DEFAULT_MESSAGES[CONSTRAINTS.IS_BOOL_STRING],
+		value
+	);
+}
+
 const isDefinedFailure = (path) => {
 	return aValidationFailure(
 		path,
@@ -58,6 +67,7 @@ const isStringFailure = (path, value) => {
 
 module.exports = {
 	aValidationFailure,
+	isBoolStringFailure,
 	isDefinedFailure,
 	isIntStringFailure,
 	isNotEmptyFailure,

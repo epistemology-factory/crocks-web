@@ -1,6 +1,7 @@
 "use strict";
 
 module.exports = {
+	...require("./boolean"),
 	...require("./common"),
 	...require("./constraints"),
 	...require("./json"),

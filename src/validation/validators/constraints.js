@@ -1,6 +1,7 @@
 "use strict";
 
 const CONSTRAINTS = {
+	IS_BOOL_STRING: "is-bool-string",
 	IS_DEFINED: "is-defined",
 	IS_INT_STRING: "is-int-string",
 	IS_ISO_DATE: "is-iso-date",
@@ -11,6 +12,7 @@ const CONSTRAINTS = {
 }
 
 const DEFAULT_MESSAGES = {
+	[CONSTRAINTS.IS_BOOL_STRING]: "should be a boolean string",
 	[CONSTRAINTS.IS_DEFINED]: "should not be null or undefined",
 	[CONSTRAINTS.IS_INT_STRING]: "should be an integer string",
 	[CONSTRAINTS.IS_ISO_DATE]: "should be an ISO date",
