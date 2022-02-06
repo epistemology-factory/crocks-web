@@ -1,6 +1,6 @@
 "use strict";
 
-const { identity } = require("crocks");
+const { Result, compose, identity, ifElse } = require("crocks");
 
 const { assertThat, is } = require("hamjest");
 
@@ -8,10 +8,12 @@ const { throwResult, throwContents } = require("@epistemology-factory/crocks-ext
 
 const {
 	isDefined,
+	ifPresent,
 	isNotEmpty,
 	CONSTRAINTS,
-	DEFAULT_MESSAGES
+	DEFAULT_MESSAGES,
 } = require("../../../src/validation/validators");
+const { validationFailure } = require("../../../src/validation/validation-failure");
 
 const { aValidationFailure } = require(
 	"../../../src/test/hamjest/lambda/matchers/validation-failure");
@@ -37,6 +39,47 @@ describe("common validators", function() {
 			const result = isDefined(path)(value).either(throwContents, identity)
 
 			assertThat(result, is(value));
+		});
+	});
+
+	describe("ifPresent", function() {
+		const constraint = "not-123"
+		const message = "Is not 123"
+		const validator = (path) =>
+			ifElse(
+				(value) => value === 123,
+				Result.Ok,
+				compose(Result.Err, validationFailure(
+					constraint,
+					message,
+					path
+				))
+			)
+
+		it("should return undefined when input not defined", function() {
+			const value = undefined;
+			const result = ifPresent(validator, path, value).either(throwContents, identity);
+
+			assertThat(result, is(value));
+		});
+
+		it("should return value when value valid", function() {
+			const value = 123;
+			const result = ifPresent(validator, path, value).either(throwContents, identity);
+
+			assertThat(result, is(value));
+		});
+
+		it("should return error when value invalid", function() {
+			const value = "123";
+			const result = ifPresent(validator, path, value).either(identity, throwResult);
+
+			assertThat(result, is(aValidationFailure(
+				path,
+				constraint,
+				message,
+				value
+			)));
 		});
 	});
 
